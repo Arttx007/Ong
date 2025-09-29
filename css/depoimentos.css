@@ -1,3 +1,9 @@
+.depoimentos {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh; /* força ocupar ao menos a tela cheia */
+  box-sizing: border-box;
+}
 .depoimentos-container {
   display: flex;
   flex-direction: column;
