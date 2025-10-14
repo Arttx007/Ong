@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrativo</title>
+    <!-- Incluindo Tailwind CSS para utilidades -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- LINK CRÍTICO: DEVE APONTAR PARA A PASTA CSS -->
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <!-- HEADER CUSTOMIZADO PELO CSS -->
+    <header class="admin-header">
+        <h1>Painel de Administração</h1>
+        <div class="logout-container">
+            <span class="user-info">Usuário: admin</span>
+            <!-- Botão de Logout que envia um POST para o endpoint padrão do Spring Security -->
+            <form action="/logout" method="post">
+                <button type="submit" 
+                        class="btn-sair">
+                    Sair
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CUSTOMIZADO PELO CSS -->
+    <main class="main-content">
+        <div class="dashboard-card">
+            <h2>Boas-vindas à Área Restrita</h2>
+            <p class="text-green-600 font-medium">
+                Você foi autenticado com sucesso! Esta página só é acessível por usuários com o papel **ADMIN**.
+            </p>
+            <p class="mt-4 text-gray-600">
+                A partir daqui, você pode começar a integrar as funcionalidades de CRUD para os beneficiários.
+            </p>
+        </div>
+
+        <section class="mt-8">
+            <div class="dashboard-card">
+                <h2>Ações Rápidas</h2>
+                <div class="quick-actions">
+                    <a href="/api/beneficiarios" target="_blank" class="action-btn">Ver Todos os Beneficiários (API Pública)</a>
+                    <a href="/admin/beneficiarios.html" class="action-btn">Gerenciar Beneficiários (CRUD - A ser criado)</a>
+                    <a href="/admin/doacoes.html" class="action-btn">Gerenciar Doações (A ser criado)</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER CUSTOMIZADO PELO CSS -->
+    <footer class="admin-footer">
+        &copy; 2025 Por Amor de Muitos. Área Administrativa.
+    </footer>
+</body>
+</html>

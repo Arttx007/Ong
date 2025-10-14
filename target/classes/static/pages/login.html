@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/login.css">
 </head>
+
 <body>
   <div class="container">
     <div class="left">
-      <img src="../src/logo.png" alt="Logo ONG">
+      <img src="/img/logo.png" alt="Logo ONG">
     </div>
 
     <div class="right">
-      <h1>ÁREA DE LOGIN</h1> 
+      <h1>ÁREA DE LOGIN</h1>
       <h2>Entrar</h2>
-      <form id="login-form">
+      <form id="login-form" method="POST" action="/login">
         <div class="input-box">
-          <input id="email" type="email" placeholder="E-mail" required>
+          <input id="usuario" type="text" name="username" placeholder="Usuario" required>
         </div>
         <div class="input-box">
-          <input id="senha" type="password" placeholder="Senha" required>
+          <input id="senha" type="password" name="password" placeholder="Senha" required>
         </div>
         <button type="submit">Login</button>
-        <a href="#" id="forgot-btn">Esqueceu a senha?</a>
+      </form>
+      <a href="#" id="forgot-btn">Esqueceu a senha?</a>
+      <div th:if="${param.error}" style="color: red; margin-top: 10px;">
+        Usuário ou senha inválidos. Por favor, tente novamente.
+      </div>
       </form>
       <p id="msg"></p>
     </div>
@@ -47,4 +53,19 @@
 
   <script src="../js/login.js"></script>
 </body>
+<script>
+    // Função para limpar o parâmetro '?error' da URL
+    function clearLoginError() {
+        if (window.location.search.includes('error')) {
+            // Usa history.replaceState para remover o '?error' da URL sem recarregar a página.
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Opcional: Adiciona um pequeno log para confirmar a limpeza
+            console.log("Parâmetro '?error' limpo da URL.");
+        }
+    }
+
+    // Executa a função na primeira vez que a página carrega
+    window.onload = clearLoginError;
+</script>
 </html>

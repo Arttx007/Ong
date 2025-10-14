@@ -1,0 +1,143 @@
+/* ============================
+   VARIÁVEIS (Mantidas do seu estilo original)
+============================ */
+:root {
+  --accent: #ff6b6b; /* Vermelho/Accent */
+  --bg: #f8f8f8; /* Fundo mais claro para o admin */
+  --card: #ffffff;
+  --primary: #00cba9; /* Verde (Cor principal do topo) */
+  --header-bg: #00cba9;
+  --header-text: #fff;
+}
+
+/* ============================
+   RESET E CONFIGURAÇÕES BÁSICAS
+============================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', 'Roboto', 'Open Sans', sans-serif;
+  font-size: 16px;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================
+   HEADER / NAV (Similar ao top-nav)
+============================ */
+.admin-header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--header-text);
+}
+
+.logout-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logout-container .user-info {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btn-sair {
+  background-color: var(--accent);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-sair:hover {
+  background-color: #e65c5c; /* Tom mais escuro do accent */
+  transform: translateY(-1px);
+}
+
+
+/* ============================
+   MAIN CONTENT
+============================ */
+.main-content {
+  flex-grow: 1;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dashboard-card {
+  background-color: var(--card);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.dashboard-card h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 8px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.action-btn {
+  text-decoration: none;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  text-align: center;
+  max-width: 300px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:hover {
+  background-color: #00a887;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================
+   FOOTER (Mantida a cor primária)
+============================ */
+.admin-footer {
+  background-color: var(--header-bg);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  margin-top: auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
