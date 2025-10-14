@@ -26,6 +26,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
 
     // Configura o AuthenticationManager usando o CustomUserDetailsService
     @Bean
