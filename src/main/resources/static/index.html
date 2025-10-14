@@ -9,7 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
-   <!-- testando a branch teste-->
+<!-- testando a branch teste-->
+
 <body>
 
   <!-- NAVBAR -->
@@ -21,7 +22,7 @@
       <a href="/pages/Depoimentos.html" class="nav-item">Depoimentos</a>
       <a href="/pages/Lojinha.html" class="nav-item nav-destaque">Lojinha</a>
     </div>
-    <a href="/src/main/resources/static/pages/login.html" class="nav-item btn-login">Acesso</a>
+    <a href="/pages/login.html" class="nav-item btn-login">Acesso</a>
   </nav>
 
   <!-- HEADER -->
@@ -69,13 +70,14 @@
     <div class="container-pix">
       <h2 class="reveal">Por que doar?</h2>
       <h2 class="reveal">Doação financeira</h2>
-      <p class="reveal">Para nos ajudar financeiramente e fazer a diferença na vida das crianças e adolescentes, é muito fácil. Clique
+      <p class="reveal">Para nos ajudar financeiramente e fazer a diferença na vida das crianças e adolescentes, é muito
+        fácil. Clique
         este botão e seja enviado a pagina do pix:</p>
       <a href="#" class="btn btn-pix reveal">Acessar área do PIX</a>
     </div>
-    
+
   </section>
-<!-- Onda invertida da seção PIX -->
+  <!-- Onda invertida da seção PIX -->
   <div class="onda-pix-invertida">
     <div class="pix-ondas">
     </div>
@@ -92,7 +94,59 @@
   <!-- BENEFICIÁRIOS -->
   <section id="beneficiarios" class="beneficiarios">
     <h2 class="reveal">Beneficiários</h2>
-    <div class="imagens-lado-lado"></div>
+
+
+
+    <!-- Container dos cards de beneficiários -->
+    <div id="beneficiarios-container" class="imagens-lado-lado reveal">
+      <!-- Cards serão inseridos dinamicamente pelo JS -->
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.querySelector('#beneficiarios .imagens-lado-lado');
+        if (!container) return;
+
+        try {
+          const response = await fetch('/beneficiarios');
+          if (!response.ok) throw new Error('Erro ao buscar beneficiários');
+
+          const beneficiarios = await response.json();
+          container.innerHTML = '';
+
+          if (beneficiarios.length === 0) {
+            container.innerHTML = '<p style="text-align:center;">Nenhum beneficiário cadastrado ainda.</p>';
+            return;
+          }
+
+          beneficiarios.forEach(b => {
+            const item = document.createElement('div');
+            item.className = 'item reveal';
+
+            const img = document.createElement('img');
+            img.src = (b.fotos && b.fotos.length > 0 && b.fotos[0].url)
+              ? b.fotos[0].url
+              : '/src/Logo.png';
+            img.alt = b.nome || 'Beneficiário';
+            img.loading = 'lazy';
+
+            const nome = document.createElement('p');
+            nome.textContent = b.nome || 'Sem nome';
+            nome.style.textAlign = 'center';
+            nome.style.fontWeight = 'bold';
+            nome.style.marginTop = '8px';
+
+            item.appendChild(img);
+            item.appendChild(nome);
+            container.appendChild(item);
+          });
+
+        } catch (erro) {
+          console.error('Erro ao carregar beneficiários:', erro);
+          container.innerHTML = '<p style="color:red; text-align:center;">Erro ao carregar beneficiários.</p>';
+        }
+      });
+    </script>
+
   </section>
 
   <!-- ONDA FINAL -->
@@ -112,7 +166,8 @@
     <div class="footer-container">
       <div class="footer-left">
         <h3 style="text-transform: uppercase;">Por Amor de Muitos</h3>
-        <p style="text-transform: uppercase;">R. Cel. Antônio Carlos Ferreira, 100 Salgadinho, Olinda - PE, 53110-130</p>
+        <p style="text-transform: uppercase;">R. Cel. Antônio Carlos Ferreira, 100 Salgadinho, Olinda - PE, 53110-130
+        </p>
       </div>
       <div class="footer-center">
         <h4 style="text-transform: capitalize;">links úteis</h4>
@@ -142,4 +197,5 @@
   <script src="/js/reveal.js"></script>
   <script src="/js/beneficiarios.js"></script>
 </body>
+
 </html>

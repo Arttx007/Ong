@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Beneficiario {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,7 @@ public class Beneficiario {
     private String necessidadeAtendida;
     private LocalDate dataAtualizacao;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "beneficiario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Foto> fotos = new ArrayList<>();
 

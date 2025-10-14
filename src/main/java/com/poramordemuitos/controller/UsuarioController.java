@@ -4,6 +4,7 @@ import com.poramordemuitos.model.Usuario;
 import com.poramordemuitos.model.Permissao;
 import com.poramordemuitos.repository.UsuarioRepository;
 import com.poramordemuitos.repository.PermissaoRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -92,4 +93,24 @@ public class UsuarioController {
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok("Usuário removido com sucesso.");
     }
+    @GetMapping("/usuario-logado")
+public ResponseEntity<?> usuarioLogado(Authentication authentication) {
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{}"); // Retorna JSON vazio
+    }
+
+    Usuario usuario = usuarioRepository.findByNome(authentication.getName());
+    if (usuario == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{}");
+    }
+
+    // Retorna JSON simplificado
+    Map<String, Object> response = Map.of(
+        "id", usuario.getId(),
+        "nome", usuario.getNome(),
+        "roles", List.of("ROLE_" + usuario.getPermissao().getNome())
+    );
+
+    return ResponseEntity.ok(response);
+}
 }
