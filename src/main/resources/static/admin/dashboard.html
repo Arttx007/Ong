@@ -1,58 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Administrativo</title>
     <!-- Incluindo Tailwind CSS para utilidades -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- LINK CRÍTICO: DEVE APONTAR PARA A PASTA CSS -->
+
+    <!-- Configuração CRÍTICA do Tailwind para usar suas variáveis CSS como cores -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Mapeamento das variáveis: Use estas classes (ex: bg-primary-brand) no lugar das classes genéricas do Tailwind.
+                        'primary-brand': 'var(--primary, #00CBA9)',   // Cor Principal (Fallback: Teal)
+                        'accent-brand': 'var(--accent, #ff6b6b)',     // Cor de Destaque/Alerta (Fallback: Red)
+                        'bg-admin': 'var(--bg, #f8f8f8)',             // Cor de Fundo da Admin (Fallback: Light Gray)
+                        'header-bg': 'var(--header-bg, #00CBA9)',     // Cor de Fundo do Header (Fallback: Teal)
+                        'header-text': 'var(--header-text, #fff)', // Cor do Texto do Header (Fallback: White)
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- O link para o CSS foi mantido. O Tailwind usa as variáveis definidas acima. -->
     <link rel="stylesheet" href="/css/dashboard.css">
 </head>
-<body>
-    <!-- HEADER CUSTOMIZADO PELO CSS -->
-    <header class="admin-header">
-        <h1>Painel de Administração</h1>
-        <div class="logout-container">
-            <span class="user-info">Usuário: admin</span>
-            <!-- Botão de Logout que envia um POST para o endpoint padrão do Spring Security -->
+
+<body class="flex flex-col min-h-screen font-sans bg-bg-admin">
+
+    <!-- HEADER CUSTOMIZADO COM TAILWIND E CORES DO TEMA -->
+    <header class="bg-header-bg text-header-text p-4 flex justify-between items-center shadow-lg">
+        <h1 class="text-2xl font-bold">Painel de Administração</h1>
+        <div class="flex items-center space-x-4">
+            <span class="user-info font-medium">Usuário: admin</span>
+            <!-- Botão de Logout usando a cor de acento (accent-brand) -->
             <form action="/logout" method="post">
-                <button type="submit" 
-                        class="btn-sair">
+                <button type="submit"
+                    class="px-4 py-2 bg-accent-brand text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
                     Sair
                 </button>
             </form>
         </div>
     </header>
 
-    <!-- MAIN CONTENT CUSTOMIZADO PELO CSS -->
-    <main class="main-content">
-        <div class="dashboard-card">
-            <h2>Boas-vindas à Área Restrita</h2>
-            <p class="text-green-600 font-medium">
+    <!-- MAIN CONTENT CUSTOMIZADO COM TAILWIND -->
+    <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+        <!-- Cartão de Boas-vindas -->
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary-brand mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-2">Boas-vindas à Área Restrita</h2>
+            <p class="text-primary-brand font-medium mb-4">
                 Você foi autenticado com sucesso! Esta página só é acessível por usuários com o papel **ADMIN**.
             </p>
             <p class="mt-4 text-gray-600">
-                A partir daqui, você pode começar a integrar as funcionalidades de CRUD para os beneficiários.
+                A partir daqui, você pode começar a integrar as funcionalidades de CRUD para os beneficiários e
+                gerenciar o conteúdo principal do site.
             </p>
         </div>
 
+        <!-- Seção de Ações Rápidas -->
         <section class="mt-8">
-            <div class="dashboard-card">
-                <h2>Ações Rápidas</h2>
-                <div class="quick-actions">
-                    <a href="/api/beneficiarios" target="_blank" class="action-btn">Ver Todos os Beneficiários (API Pública)</a>
-                    <a href="/admin/beneficiarios.html" class="action-btn">Gerenciar Beneficiários (CRUD - A ser criado)</a>
-                    <a href="/admin/doacoes.html" class="action-btn">Gerenciar Doações (A ser criado)</a>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-semibold mb-6 text-gray-700">Ações Rápidas</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                    <!-- Botões usando a cor primária (primary-brand) -->
+                    <a href="/api/beneficiarios" target="_blank"
+                        class="inline-block w-full text-center py-3 bg-primary-brand text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition duration-150">
+                        Ver Todos os Beneficiários (API Pública)
+                    </a>
+
+                    <!-- Botão para abrir o modal -->
+                    <button id="abrirModal"
+                        class="px-4 py-2 bg-primary-brand text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition duration-150">
+                        Adicionar Beneficiário
+                    </button>
+
+                    <a href="/admin/doacoes.html"
+                        class="inline-block w-full text-center py-3 bg-primary-brand text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition duration-150">
+                        Gerenciar Doações (A ser criado)
+                    </a>
+
                 </div>
             </div>
         </section>
+
+        <!-- Exemplo de Conteúdo Adicional para Preencher o Dashboard -->
+        <section class="mt-8">
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Estatísticas do Mês</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <p class="text-3xl font-bold text-primary-brand">0</p>
+                        <p class="text-sm text-gray-600">Novos Beneficiários</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <p class="text-3xl font-bold text-accent-brand">R$0</p>
+                        <p class="text-sm text-gray-600">Doações Recebidas</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <p class="text-3xl font-bold text-gray-800">0</p>
+                        <p class="text-sm text-gray-600">Voluntários Ativos</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <p class="text-3xl font-bold text-primary-brand">0</p>
+                        <p class="text-sm text-gray-600">Taxa de Conclusão</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- FOOTER CUSTOMIZADO PELO CSS -->
-    <footer class="admin-footer">
+    <!-- FOOTER CUSTOMIZADO COM TAILWIND -->
+    <footer class="p-4 bg-gray-200 text-center text-gray-600 text-sm mt-auto">
         &copy; 2025 Por Amor de Muitos. Área Administrativa.
     </footer>
+   <!-- Modal -->
+<div id="modalBeneficiario" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
+        <!-- Botão Fechar -->
+        <button id="fecharModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 font-bold text-xl">&times;</button>
+        
+        <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Adicionar Beneficiário</h2>
+        
+        <form id="formBeneficiarioModal" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Nome</label>
+                <input type="text" name="nome" required 
+                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary-brand" />
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Descrição</label>
+                <input type="text" name="descricao" 
+                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary-brand" />
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Foto (opcional)</label>
+                <input type="file" name="foto" 
+                       class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary-brand" />
+            </div>
+            <button type="submit" 
+                    class="px-4 py-2 bg-primary-brand text-white font-semibold rounded-lg shadow-md hover:opacity-90 transition duration-150">
+                Adicionar Beneficiário
+            </button>
+        </form>
+        <div id="mensagemBeneficiarioModal" class="mt-4 text-green-600 font-medium"></div>
+    </div>
+</div>
+<script src="/js/dashboard.js"></script>
 </body>
+
 </html>

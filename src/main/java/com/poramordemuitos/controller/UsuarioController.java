@@ -6,6 +6,7 @@ import com.poramordemuitos.repository.UsuarioRepository;
 import com.poramordemuitos.repository.PermissaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class UsuarioController {
     @Autowired
     private PermissaoRepository permissaoRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder; // ✅ Injetado aqui
+
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
@@ -31,6 +35,9 @@ public class UsuarioController {
         if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("E-mail já cadastrado.");
         }
+
+        // 🔒 Criptografa a senha antes de salvar
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 
         if (usuario.getPermissao() != null) {
             permissaoRepository.save(usuario.getPermissao());

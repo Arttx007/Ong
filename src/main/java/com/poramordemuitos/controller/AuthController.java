@@ -2,9 +2,9 @@ package com.poramordemuitos.controller;
 
 import com.poramordemuitos.model.Usuario;
 import com.poramordemuitos.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,8 +14,14 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 public class AuthController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    // Injeção via construtor (recomendado)
+    public AuthController(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciais) {
@@ -23,7 +29,7 @@ public class AuthController {
         String senha = credenciais.get("senha");
 
         Usuario usuario = usuarioRepository.findByEmail(email);
-        if (usuario == null || !usuario.getSenha().equals(senha)) {
+        if (usuario == null || !passwordEncoder.matches(senha, usuario.getSenha())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Usuário ou senha inválidos!"));
         }

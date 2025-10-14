@@ -16,6 +16,14 @@
     </div>
 
     <div class="right">
+      <!-- Botão VOLTAR (NOVO) -->
+        <a href="/" class="btn-back">
+            <!-- Ícone de seta simples para voltar -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Voltar
+        </a>
       <h1>ÁREA DE LOGIN</h1>
       <h2>Entrar</h2>
       <form id="login-form" method="POST" action="/login">
@@ -28,11 +36,10 @@
         <button type="submit">Login</button>
       </form>
       <a href="#" id="forgot-btn">Esqueceu a senha?</a>
-      <div th:if="${param.error}" style="color: red; margin-top: 10px;">
+      <p id="msg"></p>
+      <div id="login-error-message" th:if="${param.error}" style="margin-top: 10px; color: red;">
         Usuário ou senha inválidos. Por favor, tente novamente.
       </div>
-      </form>
-      <p id="msg"></p>
     </div>
   </div>
 
@@ -52,20 +59,24 @@
   <div id="toast-container"></div>
 
   <script src="../js/login.js"></script>
-</body>
-<script>
-    // Função para limpar o parâmetro '?error' da URL
-    function clearLoginError() {
-        if (window.location.search.includes('error')) {
-            // Usa history.replaceState para remover o '?error' da URL sem recarregar a página.
+  <script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorMessage = document.getElementById('login-error-message');
+        
+        // 1. Limpeza da URL
+        if (urlParams.has('error')) {
+            // Se o erro está na URL, o Thymeleaf o exibiu. Limpamos a URL.
             window.history.replaceState({}, document.title, window.location.pathname);
             
-            // Opcional: Adiciona um pequeno log para confirmar a limpeza
-            console.log("Parâmetro '?error' limpo da URL.");
+        } else if (errorMessage) {
+            // 2. FORÇA O ESCONDIMENTO VISUAL
+            // Se o erro NÃO está na URL, mas a mensagem ainda está na tela (por causa do cache), 
+            // NÓS A ESCONDEMOS.
+            errorMessage.style.display = 'none';
         }
-    }
-
-    // Executa a função na primeira vez que a página carrega
-    window.onload = clearLoginError;
+    };
 </script>
+</body>
+
 </html>
