@@ -36,7 +36,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<?> criarUsuario(@RequestBody Usuario usuario) {
-        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
+        if (usuarioRepository.findByNome(usuario.getNome()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("E-mail já cadastrado.");
         }
 

@@ -22,23 +22,24 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(email);
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Usuário não encontrado");
-        }
-
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if (usuario.getPermissao() != null && usuario.getPermissao().isPodeGerenciarUsuarios()) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else {
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-
-        return User.builder()
-                .username(usuario.getEmail())
-                .password(usuario.getSenha()) // senha já deve estar criptografada com BCrypt
-                .authorities(authorities)
-                .build();
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    // Usando o username passado pelo Spring para buscar pelo nome
+    Usuario usuario = usuarioRepository.findByNome(username);
+    if (usuario == null) {
+        throw new UsernameNotFoundException("Usuário não encontrado");
     }
+
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    if (usuario.getPermissao() != null && usuario.getPermissao().isPodeGerenciarUsuarios()) {
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    } else {
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    return User.builder()
+            .username(usuario.getNome())
+            .password(usuario.getSenha()) // senha já criptografada com BCrypt
+            .authorities(authorities)
+            .build();
+}
 }

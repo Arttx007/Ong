@@ -26,10 +26,10 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody Map<String, String> credenciais) {
-        String email = credenciais.get("email");
+        String nome = credenciais.get("nome");   // pega o nome do JSON
         String senha = credenciais.get("senha");
 
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByNome(nome); // busca pelo nome
 
         // Verifica se o usuário existe e se a senha bate com o hash
         if (usuario == null || !passwordEncoder.matches(senha, usuario.getSenha())) {
