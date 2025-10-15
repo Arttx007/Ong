@@ -1,4 +1,22 @@
 
+ // Abrir modal
+  document.getElementById('abrirModal').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('modalPix').style.display = 'block';
+  });
+
+  // Fechar modal ao clicar no X
+  document.getElementById('fecharModal').addEventListener('click', function() {
+    document.getElementById('modalPix').style.display = 'none';
+  });
+
+  // Fechar modal ao clicar fora
+  window.addEventListener('click', function(event) {
+    const modal = document.getElementById('modalPix');
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  })
 
   // ===== Scroll suave do menu =====
   const navLinks = document.querySelectorAll('nav ul li a');

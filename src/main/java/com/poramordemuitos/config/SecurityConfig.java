@@ -3,7 +3,6 @@ package com.poramordemuitos.config;
 import com.poramordemuitos.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +28,7 @@ public class SecurityConfig {
     
 
     // Configura o AuthenticationManager usando o CustomUserDetailsService
+    @SuppressWarnings("deprecation")
     @Bean
     public AuthenticationManager authManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -46,7 +46,9 @@ public class SecurityConfig {
                 // Rotas públicas
                 .requestMatchers(
                     "/", 
-                    "/index.html", 
+                    "/index.html",
+                    "/pages/Depoimentos.html",
+                    "/pages/Lojinha.html",
                     "/pages/login.html", 
                     "/css/**", 
                     "/js/**", 
