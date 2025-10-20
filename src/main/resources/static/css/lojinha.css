@@ -1,0 +1,112 @@
+.cards-loja {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 30px 20px;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #00CBA9;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555555;
+  margin-bottom: 25px;
+}
+
+.card .btn-primary {
+  padding: 12px 25px;
+  font-weight: 700;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.card .btn-primary:hover {
+  background-color: #20a08c;
+}
+.card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 10px 0; /* espaço entre título e descrição */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+/* CARRINHO FLUTUANTE */
+.carrinho {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 250px;
+  background: #00CBA9;
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: 'Poppins', sans-serif;
+  z-index: 1000;
+}
+
+.carrinho h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.carrinho ul {
+  list-style: none;
+  padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.carrinho ul li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.carrinho button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  background: #ff6b6b;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carrinho button:hover {
+  background: #e55a5a;
+}
+.cartao-pix {
+  margin-top: 30px;
+  background-color: #00CBA9;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  transition: transform 0.3s, opacity 0.3s;
+}
