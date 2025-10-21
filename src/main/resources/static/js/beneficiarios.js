@@ -1,25 +1,14 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('#beneficiarios .imagens-lado-lado');
-  if (!container) return;
+const acoesPrivadas = document.getElementById('acoes-privadas');
 
-  // 1️⃣ Cria os botões CRUD
-  const botoesContainer = document.createElement('div');
-  botoesContainer.classList.add('botoes-crud');
+function atualizarVisibilidadeLogin() {
+  const logado = !!localStorage.getItem('usuario_logado');
+  acoesPrivadas.style.display = logado ? 'block' : 'none';
+}
 
-  const btnAdicionar = document.createElement('button');
-  btnAdicionar.textContent = 'Adicionar Beneficiário';
-  btnAdicionar.classList.add('btn', 'btn-primary');
+// Logout
+function logout() {
+  localStorage.removeItem('usuario_logado');
+  atualizarVisibilidadeLogin();
+}
 
-  const btnEditar = document.createElement('button');
-  btnEditar.textContent = 'Editar Beneficiário';
-  btnEditar.classList.add('btn', 'btn-outline');
-
-  const btnExcluir = document.createElement('button');
-  btnExcluir.textContent = 'Excluir Beneficiário';
-  btnExcluir.classList.add('btn', 'btn-outline');
-
-  botoesContainer.append(btnAdicionar, btnEditar, btnExcluir);
-
-  // 2️⃣ Coloca acima das imagens
-  container.parentElement.prepend(botoesContainer);
-});
+atualizarVisibilidadeLogin();

@@ -91,63 +91,28 @@
     </div>
   </div>
 
-  <!-- BENEFICIÁRIOS -->
-  <section id="beneficiarios" class="beneficiarios">
-    <h2 class="reveal">Beneficiários</h2>
+ <!-- BENEFICIÁRIOS (FAKE, LOCAL) -->
+<section id="beneficiarios" class="beneficiarios">
+  <h2 class="reveal">Beneficiários</h2>
 
-
-
-    <!-- Container dos cards de beneficiários -->
-    <div id="beneficiarios-container" class="imagens-lado-lado reveal">
-      <!-- Cards serão inseridos dinamicamente pelo JS -->
+  <!-- Controles (aparecem só se estiver logado) -->
+  <div id="controles-login" style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px;">
+    <div>
+      
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', async () => {
-        const container = document.querySelector('#beneficiarios .imagens-lado-lado');
-        if (!container) return;
+    <div id="acoes-privadas" style="display:none;">
+     
+    </div>
+  </div>
 
-        try {
-          const response = await fetch('/beneficiarios');
-          if (!response.ok) throw new Error('Erro ao buscar beneficiários');
+  <!-- Container dos cards de beneficiários -->
+  <div id="beneficiarios-container" class="imagens-lado-lado reveal">
+    <!-- Cards serão inseridos dinamicamente pelo JS -->
+  </div>
 
-          const beneficiarios = await response.json();
-          container.innerHTML = '';
-
-          if (beneficiarios.length === 0) {
-            container.innerHTML = '<p style="text-align:center;">Nenhum beneficiário cadastrado ainda.</p>';
-            return;
-          }
-
-          beneficiarios.forEach(b => {
-            const item = document.createElement('div');
-            item.className = 'item reveal';
-
-            const img = document.createElement('img');
-            img.src = (b.fotos && b.fotos.length > 0 && b.fotos[0].url)
-              ? b.fotos[0].url
-              : '/src/Logo.png';
-            img.alt = b.nome || 'Beneficiário';
-            img.loading = 'lazy';
-
-            const nome = document.createElement('p');
-            nome.textContent = b.nome || 'Sem nome';
-            nome.style.textAlign = 'center';
-            nome.style.fontWeight = 'bold';
-            nome.style.marginTop = '8px';
-
-            item.appendChild(img);
-            item.appendChild(nome);
-            container.appendChild(item);
-          });
-
-        } catch (erro) {
-          console.error('Erro ao carregar beneficiários:', erro);
-          container.innerHTML = '<p style="color:red; text-align:center;">Erro ao carregar beneficiários.</p>';
-        }
-      });
-    </script>
-
-  </section>
+  
+  </script>
+</section>
 
   <!-- ONDA FINAL -->
   <div class="onda-inferior reveal">
@@ -191,36 +156,38 @@
     </div>
   </footer>
   <!-- MODAL PARA QRCODE E PIX -->
-<div id="modalPix" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-  <div style="background-color: white; margin: 10% auto; padding: 30px; width: 90%; max-width: 500px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-    
-    <!-- Botao de fechar X -->
-    <span style="float: right; cursor: pointer; font-size: 28px; color: #ff4f5a;" id="fecharModal">&times;</span>
+  <div id="modalPix"
+    style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+    <div
+      style="background-color: white; margin: 10% auto; padding: 30px; width: 90%; max-width: 500px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
 
-    <!-- Titulo -->
-    <h2 style="text-align: center; font-family: 'Poppins', sans-serif; color: #00CBA9;">Doação via Pix</h2>
-    
-    <!-- QR Code -->
-    <div style="text-align: center; margin: 30px 0;">
-      <img src="https://github.com/ArianoSouza/PORAMORDEMUITOS/blob/main/images/qrcode.jpg?raw=true" 
-           alt="Código QR para Pix" width="200" height="200" 
-           style="border-radius: 8px; border: 2px solid #00CBA9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+      <!-- Botao de fechar X -->
+      <span style="float: right; cursor: pointer; font-size: 28px; color: #ff4f5a;" id="fecharModal">&times;</span>
+
+      <!-- Titulo -->
+      <h2 style="text-align: center; font-family: 'Poppins', sans-serif; color: #00CBA9;">Doação via Pix</h2>
+
+      <!-- QR Code -->
+      <div style="text-align: center; margin: 30px 0;">
+        <img src="https://github.com/ArianoSouza/PORAMORDEMUITOS/blob/main/images/qrcode.jpg?raw=true"
+          alt="Código QR para Pix" width="200" height="200"
+          style="border-radius: 8px; border: 2px solid #00CBA9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+      </div>
+
+      <!-- Texto -->
+      <div style="text-align: center;">
+        <h3 style="font-size: 18px; color: #333;">
+          PIX: <span style="font-weight: bold; color: #00CBA9;">50119373/0001-54</span> (CNPJ)
+        </h3>
+        <p style="font-size: 16px; color: #555;">Ou escaneie o QR Code acima!</p>
+
+        <h4 style="font-size: 18px; color: #333; margin-top: 20px;">Transferência Bancária:</h4>
+        <p style="color: #555;">Banco BTG - Agência: 0050 - Conta Corrente: 505100-4</p>
+        <p style="color: #f50000;"> Por Amor de Muitos (TIA LU) </p>
+      </div>
+
     </div>
-
-    <!-- Texto -->
-    <div style="text-align: center;">
-      <h3 style="font-size: 18px; color: #333;">
-        PIX: <span style="font-weight: bold; color: #00CBA9;">50119373/0001-54</span> (CNPJ)
-      </h3>
-      <p style="font-size: 16px; color: #555;">Ou escaneie o QR Code acima!</p>
-
-      <h4 style="font-size: 18px; color: #333; margin-top: 20px;">Transferência Bancária:</h4>
-      <p style="color: #555;">Banco BTG - Agência: 0050 - Conta Corrente: 505100-4</p>
-      <p style="color: #f50000;"> Por Amor de Muitos (TIA LU) </p>
-    </div>
-
   </div>
-</div>
 
   <!-- JS -->
   <script src="/js/main.js"></script>

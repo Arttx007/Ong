@@ -2,7 +2,9 @@ package com.poramordemuitos.service;
 
 import com.poramordemuitos.model.Beneficiario;
 import com.poramordemuitos.repository.BeneficiarioRepository;
+import com.poramordemuitos.repository.FotoRepository; // importe seu repositório de fotos
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +12,12 @@ import java.util.List;
 @Service
 public class BeneficiarioService {
     private final BeneficiarioRepository repo;
-    public BeneficiarioService(BeneficiarioRepository repo) { this.repo = repo; }
+    private final FotoRepository fotoRepo;
+
+    public BeneficiarioService(BeneficiarioRepository repo, FotoRepository fotoRepo) { 
+        this.repo = repo; 
+        this.fotoRepo = fotoRepo;
+    }
 
     public List<Beneficiario> listar() { return repo.findAll(); }
 
@@ -32,5 +39,19 @@ public class BeneficiarioService {
         b.setNecessidadeAtendida(dados.getNecessidadeAtendida());
         b.setDataAtualizacao(LocalDate.now());
         return repo.save(b);
+    }
+
+    @Transactional
+    public void apagarFotosDoBeneficiario(Long beneficiarioId) {
+        Beneficiario b = repo.findById(beneficiarioId).orElseThrow();
+
+        // Apaga as fotos do banco
+        fotoRepo.deleteAll(b.getFotos());
+
+        // Limpa a lista no objeto
+        b.getFotos().clear();
+
+        // Salva alterações
+        repo.save(b);
     }
 }
