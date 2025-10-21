@@ -25,7 +25,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
 
     // Configura o AuthenticationManager usando o CustomUserDetailsService
     @SuppressWarnings("deprecation")
@@ -41,39 +40,37 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable) // Desativa CSRF para testes
-            .authorizeHttpRequests(auth -> auth
-                // Rotas públicas
-                .requestMatchers(
-                    "/", 
-                    "/index.html",
-                    "/pages/Depoimentos.html",
-                    "/pages/Lojinha.html",
-                    "/pages/login.html", 
-                    "/css/**", 
-                    "/js/**", 
-                    "/img/**", 
-                    "/uploads/**"
-                ).permitAll()
-                
-                // Rotas administrativas
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                
-                // Qualquer outra rota exige autenticação
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/pages/login.html")       // Página de login customizada
-                .loginProcessingUrl("/login")         // URL que processa login
-                .defaultSuccessUrl("/admin/dashboard.html", true) // Redirecionamento após login
-                .failureUrl("/pages/login.html?error") // Redireciona em caso de erro
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/pages/login.html")
-                .permitAll()
-            );
+                .csrf(AbstractHttpConfigurer::disable) // Desativa CSRF para testes
+                .authorizeHttpRequests(auth -> auth
+                        // Rotas públicas
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/pages/Depoimentos.html",
+                                "/pages/Lojinha.html",
+                                "/pages/login.html",
+                                "/css/**",
+                                "/js/**",
+                                "/img/**",
+                                "/session/status",
+                                "/uploads/**")
+                        .permitAll()
+
+                        // Rotas administrativas
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Qualquer outra rota exige autenticação
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/pages/login.html") // Página de login customizada
+                        .loginProcessingUrl("/login") // URL que processa login
+                        .defaultSuccessUrl("/admin/dashboard.html", true) // Redirecionamento após login
+                        .failureUrl("/pages/login.html?error") // Redireciona em caso de erro
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/pages/login.html")
+                        .permitAll());
 
         return http.build();
     }
