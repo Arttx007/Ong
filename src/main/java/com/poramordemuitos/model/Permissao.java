@@ -38,7 +38,6 @@ public class Permissao {
     public void setPodeGerenciarUsuarios(boolean podeGerenciarUsuarios) { this.podeGerenciarUsuarios = podeGerenciarUsuarios; }
 
     public String getNome() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getNome'");
     }
 }
